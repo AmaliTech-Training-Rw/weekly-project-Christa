@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Sign Up</title>
+    <link href="../static/css/signup.css" rel="stylesheet" th:href="@{../css/signup.css}">
+    <script>
+        function validatesignup() {
+            var fullname = document.getElementById('fullname').value;
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+
+            if (fullname === '' || username === '' || password === '') {
+                alert("All fields are required for sign up.");
+                return false;
+            }
+            if (password.length < 8) {
+                alert("Password must be at least 8 characters long.");
+                return false;
+            }
+            // Check if the password contains at least one special character
+            var specialCharacterRegex = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\]/;
+            if (!specialCharacterRegex.test(password)) {
+                alert("Password must contain at least one special character.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+
+<body>
+    <div id="cont">
+        <video autoplay loop muted plays-inline id="backvid">
+            <source src="../images/stars-6962.mp4" type="video/mp4">
+        </video>
+        <div id="form-box">
+            <form th:action="@{signups}" action="signups" name="signups" method="POST" id="signups" onsubmit="return validatesignup();">
+                <h2>Sign Up</h2>
+                <div id="inputbox">
+                    <ion-icon name="person-outline"></ion-icon>
+                    <input type="text" name="fullname" id="fullname" required>
+                    <label for="">Full Name</label>
+                </div>
+                <div id="inputbox">
+                    <ion-icon name="mail-outline"></ion-icon>
+                    <input type="text" name="email" id="email" required>
+                    <label for="">username</label>
+                </div>
+                <div id="inputbox">
+                    <ion-icon name="lock-closed-outline"></ion-icon>
+                    <input type="password" name="password" id="password" required>
+                    <label for="">Password</label>
+                </div>
+                <button type="submit"><span style="color:white;">Sign Up</span></button>
+                <div id="register">
+                    <p>Already have an account? <a href="login.html">Log In</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>

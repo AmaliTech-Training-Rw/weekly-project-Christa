@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{../css/manageArtist.css}" href="../static/css/manageArtist.css">
+    <title>Manage Artists</title>
+</head>
+<body>
+    <header>
+        <h1>Manage Artists</h1>
+        <input type="text" id="search" placeholder="Search by title or artist">
+    </header>
+    <main>
+        <section class="song-actions">
+            <div class="song-item">
+                <h2>Artist Name 1</h2>
+                <p>ID: 12345</p>
+                <div class="actions">
+                    <a href="#" class="view-details">View Details</a>
+                    <div>
+                        <a href="#" class="edit">Edit</a>
+                        <a href="#" class="delete">Delete</a>
+                    </div>
+                </div>
+            </div>
+            <div class="song-item">
+                <h2>Artist Name 1</h2>
+                <p>ID: 12345</p>
+                <div class="actions">
+                    <a href="#" class="view-details">View Details</a>
+                    <div>
+                        <a href="#" class="edit">Edit</a>
+                        <a href="#" class="delete">Delete</a>
+                    </div>
+                </div>
+            </div>
+            <div class="song-item">
+                <h2>Artist Name 1</h2>
+                <p>ID: 12345</p>
+                <div class="actions">
+                    <a href="#" class="view-details">View Details</a>
+                    <div>
+                        <a href="#" class="edit">Edit</a>
+                        <a href="#" class="delete">Delete</a>
+                    </div>
+                </div>
+            </div>
+            <div class="song-item">
+                <h2>Artist Name 1</h2>
+                <p>ID: 12345</p>
+                <div class="actions">
+                    <a href="#" class="view-details">View Details</a>
+                    <div>
+                        <a href="#" class="edit">Edit</a>
+                        <a href="#" class="delete">Delete</a>
+                    </div>
+                </div>
+            </div>
+            <div class="song-item">
+                <h2>Artist Name 1</h2>
+                <p>ID: 12345</p>
+                <div class="actions">
+                    <a href="#" class="view-details">View Details</a>
+                    <div>
+                        <a href="#" class="edit">Edit</a>
+                        <a href="#" class="delete">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="add-artist-button">
+            <a href="#" class="add-artist">Add New Artist</a>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer>
+        <div class="pagination">
+            <h3>2023 Your Music Library</h3>
+        </div>
+    </footer>
+    <!-- End Footer -->
+    <script>
+        fetch('/api/v1/artists')
+            .then(response => response.json())
+            .then(data => {
+                const artistList = document.getElementById('artist-list');
+                artistList.innerHTML = ''; // Clear the list
+                data.forEach(artist => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = artist.name;
+                    listItem.addEventListener('click', () => displayArtistDetails(artist.id));
+                    artistList.appendChild(listItem);
+                });
+            });
+        // Function to display artist details when an artist is clicked
+        function displayArtistDetails(artistId) {
+            fetch(`/api/v1/artists/${artistId}`)
+                .then(response => response.json())
+                .then(artist => {
+                    const artistDetails = document.getElementById('artist-details');
+                    artistDetails.innerHTML = `Name: ${artist.name}<br>ID: ${artist.id}`;
+                    // Update the artist form with the selected artist's details
+                    const artistForm = document.getElementById('artist-form');
+                    artistForm.artistId = artist.id;
+                    artistForm.artistName.value = artist.name;
+                });
+        }
+        // Add or update an artist when the form is submitted
+        const artistForm = document.getElementById('artist-form');
+        artistForm.addEventListener('submit', event => {
+            event.preventDefault();
+            const artistId = artistForm.artistId;
+            const artistName = artistForm.artistName.value;
+            const method = artistId ? 'PUT' : 'POST';
+            const url = artistId ? `/api/v1/artists/${artistId}/update` : '/api/v1/artists/register';
+            fetch(url, {
+                method,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name: artistName }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Refresh the artist list after adding or updating
+                    fetch('/api/v1/artists')
+                        .then(response => response.json())
+                        .then(data => {
+                            const artistList = document.getElementById('artist-list');
+                            artistList.innerHTML = ''; // Clear the list
+                            data.forEach(artist => {
+                                const listItem = document.createElement('li');
+                                listItem.textContent = artist.name;
+                                listItem.addEventListener('click', () => displayArtistDetails(artist.id));
+                                artistList.appendChild(listItem);
+                            });
+                        });
+                    // Clear the artist details and form
+                    document.getElementById('artist-details').innerHTML = '';
+                    artistForm.artistId = undefined;
+                    artistForm.artistName.value = '';
+                });
+        });
+        // Delete an artist when the "Delete Artist" button is clicked
+        const deleteButton = document.getElementById('delete-artist');
+        deleteButton.addEventListener('click', () => {
+            const artistId = artistForm.artistId;
+            if (!artistId) return; // No artist selected
+            fetch(`/api/v1/artists/${artistId}/delete`, {
+                method: 'DELETE',
+            })
+                .then(() => {
+                    // Refresh the artist list after deleting
+                    fetch('/api/v1/artists')
+                        .then(response => response.json())
+                        .then(data => {
+                            const artistList = document.getElementById('artist-list');
+                            artistList.innerHTML = ''; // Clear the list
+                            data.forEach(artist => {
+                                const listItem = document.createElement('li');
+                                listItem.textContent = artist.name;
+                                listItem.addEventListener('click', () => displayArtistDetails(artist.id));
+                                artistList.appendChild(listItem);
+                            });
+                        });
+                    // Clear the artist details and form
+                    document.getElementById('artist-details').innerHTML = '';
+                    artistForm.artistId = undefined;
+                    artistForm.artistName.value = '';
+                });
+        });
+    </script>
+</body>
+</html>
