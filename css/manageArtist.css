@@ -1,0 +1,143 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #f2f2f2;
+}
+
+header {
+    background-color: #DBA628;
+    text-align: center;
+    color: #FCF7EA;
+}
+
+header h1 {
+    margin-bottom: 7px;
+}
+
+input[type="text"] {
+    width: 50%;
+    padding: 13px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    font-size: 16px;
+    margin-bottom: 13px;
+}
+
+.song-actions {
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+    flex-grow: 1;
+    height: 50vh;
+    overflow-y: auto;
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+p {
+    margin: 10px 0;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+a {
+    text-decoration: none;
+    padding: 7px 13px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.view-details {
+    background-color: #DBA628;
+    color: white;
+    margin-bottom: 20px;
+   
+}
+
+.edit {
+    background-color: #AB892C;
+    color: white;
+    margin-left: 84%; /* Adjust the margin to move closer to the "Delete" button */
+    padding: 7px 13px;
+}
+
+.delete {
+    background-color: #753918;
+    color: white;
+}
+
+a:hover {
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    color: rgb(67, 82, 44);
+    ;
+}
+
+.song-item {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    width: 85%;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.get-artist {
+    background-color: #DBA628;
+    color: white;
+}
+
+.delete-artist {
+    background-color: #AB892C;
+    color: white;
+}
+
+.update-artist {
+    background-color: #753918;
+    color: white;
+}
+
+/* Style the "Add Artist" button */
+.add-artist-button {
+    text-align: center;
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+.add-artist {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #AB892C;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 7px;
+}
+
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #753918;
+    color: #FCF7EA;
+    margin-top: auto;
+}
