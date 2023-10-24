@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Song List</title>
+    <link rel="stylesheet" th:href="@{../css/songListPage.css}" href="../static/css/songListPage.css">
+    <link rel="stylesheet" href="../static/css/sidebar.css"> <!-- Include CSS for the sidebar -->
+</head>
+<body>
+    <header>
+        <h1>Song List</h1>
+        <input type="text" id="search" placeholder="Search by title or artist">
+    </header>  
+     
+    <div class="body1">
+            <div id="sidebar">
+                <section id="manage-songs">
+                    <a href="songListPage.html" claszs="no-underline">
+                        <h2>Manage Songs</h2>
+                    </a>
+                </section>
+            
+                <section id="manage-artists">
+                    <h2>Manage Artists</h2>
+                </section>
+            
+                <section id="profile">
+                    <h2>Your Profile</h2>
+                </section>
+            </div>
+            
+        
+            <main>
+                <section class="centered-song-list">
+                    <ul id="song-items">
+                        <li>NF - Brave</li>
+                        <li>Beyonce - Pretty_Hurts</li>
+                        <li>FourFiveSecond - Rihanna</li>
+                        <li>NF - Brave</li>
+                        <li>Beyonce - Pretty_Hurts</li>
+                        <li>FourFiveSecond - Rihanna</li>
+                        <li>NF - Brave</li>
+                        <li>Beyonce - Pretty_Hurts</li>
+                        <li>FourFiveSecond - Rihanna</li>
+                        <li>NF - Brave</li>
+                        <li>Beyonce - Pretty_Hurts</li>
+                        <li>FourFiveSecond - Rihanna</li>
+                        <li>NF - Brave</li>
+                        <li>Beyonce - Pretty_Hurts</li>
+                        <li>FourFiveSecond - Rihanna</li>
+                    </ul>
+                    <div id="pagination">
+                    </div>
+                </section>
+            </main>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="pagination">
+            <h3>2023 Your Music Library</h3>
+        </div>
+    </footer>
+    <!-- End Footer -->
+
+    <script>
+    </script>
+</body>
+</html>
