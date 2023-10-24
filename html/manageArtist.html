@@ -20,7 +20,6 @@
         <div class="add-artist-button">
             <a href="#" class="add-artist">Add New Artist</a>
         </div>
-
     </main>
     <!-- Footer -->
     <footer>
@@ -30,7 +29,6 @@
     </footer>
     <!-- End Footer -->
     <script>
-
         // Check if the user has a valid token in local storage
         const authToken = localStorage.getItem('authToken');
         if (!authToken) {
@@ -95,23 +93,20 @@
 
         const addArtistButton = document.querySelector('.add-artist');
         addArtistButton.addEventListener('click', handleAddArtistButtonClick);
-        function handleEditButtonClick(artistName, h2) {
+
+         // Function to handle the "Edit Artist" button click
+        function handleEditButtonClick(artistID, h2) {
+            const currentArtistName = h2.textContent;
             Swal.fire({
                 title: 'Edit Artist',
                 input: 'text',
-                inputLabel: 'Edit Artist\'s Full Name',
-                inputPlaceholder: 'Full Name',
+                inputLabel: 'Artist Name',
+                inputValue: currentArtistName,// Set the current artist name as the default value
                 showCancelButton: true,
-                confirmButtonText: 'Save Changes',
-                cancelButtonText: 'Cancel',
-                inputValue: artistName,
+                confirmButtonText: 'Save',
             }).then(async (result) => {
                 if (result.isConfirmed && result.value) {
                     const newArtistName = result.value;
-
-                    // Get the artist ID from the map
-                    const artistID = artistIdMap.get(artistName.toLowerCase());
-
 
                     // Update the artist's name on the page
                     h2.textContent = newArtistName;
@@ -179,14 +174,12 @@
             deleteLink.className = 'delete';
             deleteLink.textContent = 'Delete';
 
-            // Attach event listeners for the edit and delete buttons and add console.log
+            // Attach event listeners for the edit and delete buttons
             editLink.addEventListener('click', () => {
-                console.log('Edit button clicked for artist ID:', artistID);
                 handleEditButtonClick(artistID, h2);
             });
 
             deleteLink.addEventListener('click', () => {
-                console.log('Delete button clicked for artist ID:', artistID);
                 handleDeleteButtonClick(artistID);
             });
 
@@ -223,7 +216,7 @@
                     })
                         .then((response) => {
                             if (!response.ok) {
-                                throw new Error(`Request failed with status: ${response.status}`);
+                                throw  Error(`Request failed with status: ${response.status}`);
                             }
                             return response.json();
                         })
@@ -269,42 +262,30 @@
                     return response.json();
                 })
                 .then((data) => {
-                    console.log('API Response:', data);
-
                     // Check if 'data' is an array
                     if (Array.isArray(data.data)) {
-                        console.log('Artists:', data.data);
                         artistListContainer.innerHTML = ''; // Clear existing artists
 
                         // Reverse the order of artists
                         const reversedArtists = data.data.slice().reverse();
 
                         reversedArtists.forEach((artist) => {
-                            console.log('Artist Name:', artist.fullName);
-                            console.log('Artist ID:', artist.ID);
-
-                            const artistItem = createArtistItem(artist.fullName, artist.ID);
+                            const artistItem = createArtistItem(artist.fullName, artist.id);
                             artistListContainer.appendChild(artistItem);
 
                             // Add the artist ID to the map using a case-insensitive key
                             artistIdMap.set(artist.fullName.toLowerCase(), artist.ID);
                         });
-
-
                     } else {
-                        console.error('API Response Error: Data is not an array');
                         Swal.fire('Error', 'API Response Error: Data is not in the expected format', 'error');
                     }
                 })
                 .catch((error) => {
-                    console.error('API Request Error:', error);
                     Swal.fire('Error', `An error occurred while fetching artists: ${error.message}`, 'error');
                 });
         }
+
         fetchAndDisplayArtists();
-
-
-
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
